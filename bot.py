@@ -1,6 +1,7 @@
-import os
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
@@ -9,13 +10,26 @@ import time
 email = os.getenv("EMAIL")
 password = os.getenv("PASSWORD")
 
-# Set up WebDriver
-driver = webdriver.Chrome()
+# Debugging output to check if email and password are being retrieved correctly
+print(f"Email: {email}")
+print(f"Password: {password}")
+
+if not email or not password:
+    raise ValueError("Email or password is missing in the environment variables.")
+
+# Set up Chrome options for headless mode
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+chrome_options.add_argument("--no-sandbox")  # Prevent Chrome from running in sandbox mode
+chrome_options.add_argument("--disable-dev-shm-usage")  # Disable shared memory usage
+
+# Set up WebDriver with the specified options
+driver = webdriver.Chrome(options=chrome_options)
 
 try:
     # Step 1: Open the Spond login page
     driver.get("https://spond.com/login")
-    time.sleep(2)
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "email")))
 
     # Step 2: Log in to your account
     email_field = driver.find_element(By.NAME, "email")
@@ -23,11 +37,10 @@ try:
     email_field.send_keys(email)
     password_field.send_keys(password)
     password_field.submit()
-    time.sleep(5)
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//button[@name='accept-button']")))
 
     # Step 3: Navigate to the event page
     driver.get("https://spond.com/your_event_url")  # Replace with your event URL
-    time.sleep(3)
 
     # Step 4: Wait for the accept button and click it
     accept_button = WebDriverWait(driver, 1800).until(
