@@ -24,11 +24,12 @@ jobs:
       - name: Set up Chrome
         uses: google-github-actions/setup-chrome@v2
         with:
-          chrome-version: '131'  # Match the version of Chrome you're using
+          chrome-version: '131.0.6778.204'  # Match the version of Chrome you're using
 
       - name: Run the bot script
         env:
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL: ${{ secrets.EMAIL }}    # Access the secret EMAIL
+          PASSWORD: ${{ secrets.PASSWORD }}  # Access the secret PASSWORD
         run: |
           python bot.py
+
