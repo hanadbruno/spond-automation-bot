@@ -21,10 +21,11 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Set up ChromeDriver
-        uses: google-github-actions/setup-chrome@v0
-        with:
-          chrome-version: 'latest'  # You can specify the version if needed
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1.7.2  # New version for setting up Chrome
+
+      - name: setup-chromedriver
+        uses: nanasess/setup-chromedriver@v2.3.0  # Setup chromedriver with this action
 
       - name: Run the bot script
         env:
