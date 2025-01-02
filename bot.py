@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
+
 # Get credentials from environment variables
 email = os.getenv("EMAIL")
 password = os.getenv("PASSWORD")

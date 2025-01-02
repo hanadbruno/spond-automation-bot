@@ -21,15 +21,14 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Set up Chrome
-        uses: google-github-actions/setup-chrome@v2
+      - name: Set up ChromeDriver
+        uses: google-github-actions/setup-chrome@v0
         with:
-          chrome-version: '131.0.6778.204'  # Match the version of Chrome you're using
+          chrome-version: 'latest'  # You can specify the version if needed
 
       - name: Run the bot script
         env:
-          EMAIL: ${{ secrets.EMAIL }}    # Access the secret EMAIL
-          PASSWORD: ${{ secrets.PASSWORD }}  # Access the secret PASSWORD
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
         run: |
           python bot.py
-
