@@ -5,17 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-
-# Set up Chrome options for headless mode
-chrome_options = Options()
-chrome_options.add_argument("--headless")  # Run Chrome in headless mode
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-dev-shm-usage")
-
-# Initialize the WebDriver using webdriver-manager with the Service class
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=chrome_options)
+import time
 
 # Get credentials from environment variables
 email = os.getenv("EMAIL")
@@ -27,6 +17,15 @@ print(f"Password: {password}")
 
 if not email or not password:
     raise ValueError("Email or password is missing in the environment variables.")
+
+# Set up Chrome options for headless mode
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Run Chrome in headless mode
+chrome_options.add_argument("--no-sandbox")  # Prevent Chrome from running in sandbox mode
+chrome_options.add_argument("--disable-dev-shm-usage")  # Disable shared memory usage
+
+# Set up WebDriver with the specified options
+driver = webdriver.Chrome(options=chrome_options)
 
 try:
     # Step 1: Open the Spond login page
