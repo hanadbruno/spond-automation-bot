@@ -7,7 +7,7 @@ on:
 
 jobs:
   run-bot:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest  # Switch to macOS runner for Safari support
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
@@ -19,14 +19,12 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
           pip install -r requirements.txt
 
-            # Enable Safari WebDriver on macOS
-      - name: Set up SafariDriver
+      - name: Enable SafariDriver
         run: |
           sudo safaridriver --enable
-  
-
 
       - name: Run the bot script
         env:
