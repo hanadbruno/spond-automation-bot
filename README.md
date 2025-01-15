@@ -36,8 +36,9 @@ cd spond-automation
 2. Install Dependencies
 Install the required Python dependencies:
 pip install -r requirements.txt
+```
 
-3. Set Up GitHub Secrets
+4. Set Up GitHub Secrets
 In your GitHub repository, navigate to Settings > Secrets and add the following secrets:
 
 EMAIL: Your Spond account email address
