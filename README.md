@@ -66,5 +66,6 @@ Troubleshooting
 Safari WebDriver Issues: Ensure that Safari WebDriver is properly enabled. If you encounter any issues running it in GitHub Actions, check the SafariDriver installation logs.
 Incorrect Event Dates: Make sure that the event date format matches the expected format. If you run into issues parsing the event time, check the Spond page for updates in the event time format.
 
-Contributions
+Contributions:
+
 Contributions are welcome! If you find a bug or would like to suggest improvements, feel free to fork the repository and submit a pull request. We appreciate any help to make this project better!
