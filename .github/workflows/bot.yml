@@ -1,13 +1,15 @@
 name: Spond Automation
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    # Runs at 16:00 UTC on Wednesdays (5 mins before 17:00 CET)
+    - cron: '55 16 * * 3'  # Runs 5 minutes before 17:00 CET (Wednesday)
+    # Runs at 14:55 UTC on Fridays (5 mins before 15:00 CET)
+    - cron: '55 14 * * 5'  # Runs 5 minutes before 15:00 CET (Friday)
 
 jobs:
   run-bot:
-    runs-on: macos-latest  # Switch to macOS runner for Safari support
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
@@ -19,10 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Enable SafariDriver
+      - name: Set up SafariDriver
         run: |
           sudo safaridriver --enable
 

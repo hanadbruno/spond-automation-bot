@@ -82,37 +82,33 @@ try:
     print("Navigated to the group event page.")
 
     # Step 4: Extract event details
-    try:
-        event_card = WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.XPATH, "//*[@id='pageContentWrapper']/div/div[2]/div[1]/div[2]/div/div/div[2]"))
-        )
-        
-        # Check if the event card contains the `href`
-        event_url = event_card.get_attribute("href")
-        if not event_url:
-            # Look for a clickable child link within the event card
-            link_element = event_card.find_element(By.TAG_NAME, "a")
-            event_url = link_element.get_attribute("href")
+    event_card = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.XPATH, "//*[@id='pageContentWrapper']/div/div[2]/div[1]/div[2]/div/div/div[2]/div/div[1]"))
+    )
+    
+    # Check if the event card contains the `href`
+    event_url = event_card.get_attribute("href")
+    if not event_url:
+        # Look for a clickable child link within the event card
+        link_element = event_card.find_element(By.TAG_NAME, "a")
+        event_url = link_element.get_attribute("href")
 
-        if not event_url:
-            raise ValueError("Event URL could not be found.")
-        
-        print(f"Found event: {event_url}")
+    if not event_url:
+        raise ValueError("Event URL could not be found.")
+    
+    print(f"Found event: {event_url}")
 
-        event_date_str = driver.find_element(By.XPATH, "//*[@id='event_card_start_time']").text
-        event_date = parse_event_date(event_date_str)
-        print(f"Event date: {event_date}")
+    event_date_str = driver.find_element(By.XPATH, "//*[@id='event_card_start_time']").text
+    event_date = parse_event_date(event_date_str)
+    print(f"Event date: {event_date}")
 
-        target_time = event_date - timedelta(days=2)
-        current_time = datetime.now()
+    target_time = event_date - timedelta(days=2)
+    current_time = datetime.now()
 
-        if current_time < target_time:
-            wait_time = (target_time - current_time).total_seconds()
-            print(f"Waiting for {wait_time} seconds until the target time.")
-            time.sleep(wait_time)
-    except Exception as e:
-        print(f"Failed to extract event details: {e}")
-        raise
+    if current_time < target_time:
+        wait_time = (target_time - current_time).total_seconds()
+        print(f"Waiting for {wait_time} seconds until the target time.")
+        time.sleep(wait_time)
 
     # Step 5: Accept the event
     driver.get(event_url)
