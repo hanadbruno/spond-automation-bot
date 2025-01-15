@@ -21,11 +21,12 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1.7.2  # New version for setting up Chrome
+            # Enable Safari WebDriver on macOS
+      - name: Set up SafariDriver
+        run: |
+          sudo safaridriver --enable
+  
 
-      - name: setup-chromedriver
-        uses: nanasess/setup-chromedriver@v2.3.0  # Setup chromedriver with this action
 
       - name: Run the bot script
         env:
