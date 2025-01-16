@@ -42,13 +42,15 @@ pip install -r requirements.txt
 In your GitHub repository, navigate to Settings > Secrets and add the following secrets:
 
 EMAIL: Your Spond account email address
-PASSWORD: Your Spond account password
+PASSWORD: Your Spond account password - 
 These secrets will be used to securely log in to your Spond account during the automation process.
 
-4. Set Up GitHub Actions
+5. Set Up GitHub Actions
+   
 The workflow is already configured to run the bot automatically on Wednesdays at 17:00 UTC and Fridays at 15:00 UTC. You can modify the schedule in the .github/workflows/spond_automation.yml file if needed.
 
-How It Works
+How It Works:
+
 The bot uses Selenium WebDriver to interact with the Safari browser and automate the login process on the Spond platform.
 Once logged in, the bot navigates to the group event page.
 It waits until the specified time (Wednesday 17:00 or Friday 15:00) and then accepts the event automatically.
