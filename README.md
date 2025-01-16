@@ -38,14 +38,14 @@ Install the required Python dependencies:
 pip install -r requirements.txt
 ```
 
-4. Set Up GitHub Secrets
+3. Set Up GitHub Secrets
 In your GitHub repository, navigate to Settings > Secrets and add the following secrets:
 
 EMAIL: Your Spond account email address
 PASSWORD: Your Spond account password - 
 These secrets will be used to securely log in to your Spond account during the automation process.
 
-5. Set Up GitHub Actions
+4. Set Up GitHub Actions
    
 The workflow is already configured to run the bot automatically on Wednesdays at 17:00 UTC and Fridays at 15:00 UTC. You can modify the schedule in the .github/workflows/spond_automation.yml file if needed.
 
