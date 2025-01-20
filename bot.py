@@ -42,6 +42,45 @@ def parse_event_date(event_date_str):
         except ValueError:
             raise ValueError(f"Date format not recognized: {event_date_str}")
 
+# Function to get the next event's correct time based on the schedule
+def get_next_event_time():
+    # Define the event times (in UTC)
+    event_times = [
+        {"day": 2, "hour": 16, "minute": 0},  # Wednesday at 17:00 CET (UTC 16:00)
+        {"day": 5, "hour": 14, "minute": 0},  # Friday at 15:00 CET (UTC 14:00)
+        {"day": 7, "hour": 14, "minute": 0},  # Sunday at 15:00 CET (UTC 14:00)
+    ]
+
+    # Get current time in UTC
+    current_time = datetime.utcnow()
+
+    # Loop through the event times and find the next scheduled event time
+    for event_time in event_times:
+        if current_time.weekday() <= event_time["day"]:  # Check if the current day is before the event day
+            next_event_time = current_time.replace(hour=event_time["hour"], minute=event_time["minute"], second=0, microsecond=0)
+            # If the event is later today, we want it to run, otherwise check the next available event
+            if next_event_time > current_time:
+                return next_event_time
+
+    # If no upcoming events in this week, return the next week's event
+    return next_event_time.replace(year=current_time.year + 1)  # Optional logic to move to next year
+
+# Calculate how long to wait until the next event time
+def wait_until_event():
+    next_event_time = get_next_event_time()
+    current_time = datetime.utcnow()
+
+    # Add a 3-minute buffer to the next event time to give the bot time to be ready
+    buffer_time = timedelta(minutes=3)
+    next_event_time_with_buffer = next_event_time - buffer_time
+
+    if next_event_time_with_buffer > current_time:
+        wait_time = (next_event_time_with_buffer - current_time).total_seconds()
+        print(f"Waiting for {wait_time} seconds until the next event (with 3-minute buffer).")
+        time.sleep(wait_time)
+    else:
+        print("Event time is already passed. Exiting...")
+
 # Initialize WebDriver for Safari
 safari_options = Options()
 driver = webdriver.Safari(options=safari_options)
@@ -109,6 +148,9 @@ try:
         wait_time = (target_time - current_time).total_seconds()
         print(f"Waiting for {wait_time} seconds until the target time.")
         time.sleep(wait_time)
+
+    # Call the wait function before proceeding with the rest of the logic
+    wait_until_event()
 
     # Step 5: Accept the event
     driver.get(event_url)
