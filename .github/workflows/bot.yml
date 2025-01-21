@@ -32,5 +32,7 @@ jobs:
         env:
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL1: ${{secrets.EMAIL1}}
+          PASSWORD1: ${{secrets.PASSWORD1}}
         run: |
           python bot.py
