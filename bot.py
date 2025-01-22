@@ -77,15 +77,19 @@ def wait_until_event():
     next_event_time = get_next_event_time()
     current_time = datetime.utcnow()
 
-    buffer_time = timedelta(minutes=3)
-    next_event_time_with_buffer = next_event_time - buffer_time
+    # Calculate wait time
+    wait_time = (next_event_time - current_time).total_seconds()
 
-    if next_event_time_with_buffer > current_time:
-        wait_time = (next_event_time_with_buffer - current_time).total_seconds()
-        print(f"Waiting for {wait_time} seconds until the next event (with 3-minute buffer).")
-        time.sleep(wait_time)
-    else:
-        print("Event time has already passed. Exiting...")
+    # If wait time exceeds the GitHub runner's limit, exit
+    if wait_time > 360 * 60:  # 360 minutes in seconds
+        print("Next event is too far in the future. Exiting...")
+        return False
+
+    # Wait only until the event time
+    print(f"Waiting for {wait_time} seconds until the next event.")
+    time.sleep(wait_time)
+    return True
+
 
 # Function to perform login and event handling for a user
 def handle_user(email, password):

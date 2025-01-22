@@ -3,14 +3,17 @@ name: Spond Automation
 on:
   push:
   schedule:
-    # Runs at 16:00 UTC on Wednesdays (5 mins before 17:00 CET)
-    - cron: '55 16 * * 3'  # Runs 5 minutes before 17:00 CET (Wednesday)
-    # Runs at 14:30 UTC on Fridays (to be ready for the 15:00 CET event on Sunday)
-    - cron: '30 14 * * 5'  # Runs at 14:30 UTC on Fridays (to be ready for 15:00 CET on Sunday)
+    # Runs at 16:50 UTC on Wednesdays (10 mins before 17:00 CET)
+    - cron: '50 16 * * 3'
+    # Runs at 14:50 UTC on Fridays (10 mins before 15:00 CET)
+    - cron: '50 14 * * 5'
+    # Runs at 14:50 UTC on Sundays (10 mins before 15:00 CET)
+    - cron: '50 14 * * 7'
 
 jobs:
   run-bot:
     runs-on: macos-latest
+
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
@@ -32,7 +35,7 @@ jobs:
         env:
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
-          EMAIL1: ${{secrets.EMAIL1}}
-          PASSWORD1: ${{secrets.PASSWORD1}}
+          EMAIL1: ${{ secrets.EMAIL1 }}
+          PASSWORD1: ${{ secrets.PASSWORD1 }}
         run: |
           python bot.py
