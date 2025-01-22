@@ -4,11 +4,10 @@ on:
   push:
   schedule:
     # Runs at 16:50 UTC on Wednesdays (10 mins before 17:00 CET)
-    - cron: '50 16 * * 3'
+    - cron: '47 16 * * 3'
     # Runs at 14:50 UTC on Fridays (10 mins before 15:00 CET)
-    - cron: '50 14 * * 5'
-    # Runs at 14:50 UTC on Sundays (10 mins before 15:00 CET)
-    - cron: '50 14 * * 7'
+    - cron: '47 14 * * 5'
+   
 
 jobs:
   run-bot:
