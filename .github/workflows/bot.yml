@@ -1,7 +1,7 @@
 name: Spond Automation
 
 on:
-  push:
+
   schedule:
     # Runs at 16:50 UTC on Wednesdays (10 mins before 17:00 CET)
     - cron: '47 16 * * 3'
